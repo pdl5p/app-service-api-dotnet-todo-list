@@ -12,6 +12,7 @@ using System.Net.Http.Headers;
 using System.Configuration;
 using ToDoListAPI.Models;
 using ToDoListAPI;
+using System.Web.Http.Cors;
 
 namespace ToDoListAPI.Filters
 {
@@ -30,9 +31,12 @@ namespace ToDoListAPI.Filters
     }
 }
 
+
+
 namespace ToDoListAPI.Controllers
 {
     [HttpOperationExceptionFilterAttribute]
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ToDoListController : ApiController
     {
         private string owner = "*";
