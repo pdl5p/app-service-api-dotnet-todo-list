@@ -16,8 +16,8 @@ namespace ToDoListDataAPI.Controllers
     public class ToDoListController : ApiController
     {
         // Uncomment following lines for service principal authentication
-        //private static string trustedCallerClientId = ConfigurationManager.AppSettings["todo:TrustedCallerClientId"];
-        //private static string trustedCallerServicePrincipalId = ConfigurationManager.AppSettings["todo:TrustedCallerServicePrincipalId"];
+        private static string trustedCallerClientId = ConfigurationManager.AppSettings["todo:TrustedCallerClientId"];
+        private static string trustedCallerServicePrincipalId = ConfigurationManager.AppSettings["todo:TrustedCallerServicePrincipalId"];
 
         private static Dictionary<int, ToDoItem> mockData = new Dictionary<int, ToDoItem>();
 
@@ -30,12 +30,12 @@ namespace ToDoListDataAPI.Controllers
         private static void CheckCallerId()
         {
             // Uncomment following lines for service principal authentication
-            //string currentCallerClientId = ClaimsPrincipal.Current.FindFirst("appid").Value;
-            //string currentCallerServicePrincipalId = ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
-            //if (currentCallerClientId != trustedCallerClientId || currentCallerServicePrincipalId != trustedCallerServicePrincipalId)
-            //{
-            //    throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized, ReasonPhrase = "The appID or service principal ID is not the expected value." });
-            //}
+            string currentCallerClientId = ClaimsPrincipal.Current.FindFirst("appid").Value;
+            string currentCallerServicePrincipalId = ClaimsPrincipal.Current.FindFirst("http://schemas.microsoft.com/identity/claims/objectidentifier").Value;
+            if (currentCallerClientId != trustedCallerClientId || currentCallerServicePrincipalId != trustedCallerServicePrincipalId)
+            {
+                throw new HttpResponseException(new HttpResponseMessage { StatusCode = HttpStatusCode.Unauthorized, ReasonPhrase = "The appID or service principal ID is not the expected value." });
+            }
         }
 
         // GET: api/ToDoItemList
